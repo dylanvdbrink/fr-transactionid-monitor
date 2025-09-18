@@ -5,6 +5,11 @@ chrome.webRequest.onResponseStarted.addListener(
         return;
       }
 
+      const url = new URL(details.url);
+      if (!url.pathname.endsWith('/authenticate')) {
+        return;
+      }
+
       const transactionHeader = details.responseHeaders?.find(
         header => header.name.toLowerCase() === 'x-forgerock-transactionid'
       );
